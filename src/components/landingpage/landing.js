@@ -70,22 +70,25 @@ class Landingpage extends Component {
     else{
      // alert('Successfull');
       const data = {
-        Email: this.state.email,
-        Pass: this.state.password
+        // Email: this.state.email,
+        // Pass: this.state.password,
+        email: this.state.email,
+        password: this.state.password
     }
    
-    const json = JSON.stringify(data);
-    axios.post('http://localhost:5000/user/login', { json }).then(res => {
-        console.log( '=======',res ,res.data);
-        if(res.data.token){
-        localStorage.setItem('userdata', JSON.stringify(res.data));
+    const json = data;
+    // https://retro-app-server-13.herokuapp.com/user/login
+    axios.post('https://custom-authentication.herokuapp.com/users/login',  json ).then(res => {
+       console.log( '=======',res ,res.data);
+        // if(res.data.token){
+        // localStorage.setItem('userdata', JSON.stringify(res.data));
       //   dispatch({type: myActions.userlogin , payload:data})
         this.props.history.push('/createretro');
-         }
+        //  }
 
-        else{
-            alert(res.data.message);
-        }
+        // else{
+        //     alert(res.data.message);
+        // }
         
     })
         .catch(err => {
@@ -125,31 +128,34 @@ class Landingpage extends Component {
     evt.preventDefault();
       if(this.state.createaccountconfirmpassword === this.state.createaccountpassword){
         const user = {
-          Firstname: this.state.createaccountfirstname,
-          Lastname: this.state.createaccountsecondname,
-          Email: this.state.createuseremail,
-          Pass: this.state.createaccountconfirmpassword,
-          Status : this.state.status
+          // Firstname: this.state.createaccountfirstname,
+          // Lastname: this.state.createaccountsecondname,
+          // Emaiemal: this.state.createuseremail,
+          // Pass: this.state.createaccountconfirmpassword,
+          // Status : this.state.status
+          email: this.state.createuseremail,
+          password: this.state.createaccountconfirmpassword,
       }
-      const json = JSON.stringify(user);
-      axios.post('http://localhost:5000/user/signup', { json }).then(res => {
+      const json = user;
+      // https://retro-app-server-13.herokuapp.com/user/signup
+      axios.post('https://custom-authentication.herokuapp.com/users/',  json ).then(res => {
           console.log(res);
-          alert(res.data.message);
-          if(res.data.token){
-              this.setState({
-                  createaccountfirstname: "",
-                  createaccountsecondname: "",
-                  createuseremail: "",
-                  createaccountconfirmpassword: "",
-                  createaccountpassword :""
-              })
-              localStorage.setItem('userdata', JSON.stringify(res.data));
+          // alert(res.data.message);
+          // if(res.data.token){
+          //     this.setState({
+          //         createaccountfirstname: "",
+          //         createaccountsecondname: "",
+          //         createuseremail: "",
+          //         createaccountconfirmpassword: "",
+          //         createaccountpassword :""
+          //     })
+          //     localStorage.setItem('userdata', JSON.stringify(res.data));
              this.props.history.push('/createretro');
       }
-          else{
-              alert(res.data.message);
-          }
-      })
+          // else{
+          //     alert(res.data.message);
+          // }
+      ).catch(err => alert(err))
   }
 
       
@@ -157,17 +163,6 @@ class Landingpage extends Component {
         alert('Password Did not Matched');
       }
   }
-
-  chbx(obj){
-    var that = obj;
-       if(document.getElementById(that.id).checked == true) {
-          document.getElementById('id1').checked = false;
-          document.getElementById('id2').checked = false;
-          document.getElementById('id3').checked = false;
-          document.getElementById(that.id).checked = true;
-       }
-    }
-
 
 
     render(){
